@@ -16,8 +16,9 @@ const Login = () => {
 	const { loginServiceProvider } = useContext(AuthContext);
 	const handleLogin = async () => {
 		const response = await loginServiceProvider(login, username, password);
-		if (response.status === 200) navigation.navigate("Home");
-		else alert(response.message);
+		if (response.success) {
+			navigation.navigate("Home");
+		} else alert(response.message);
 	};
 	return (
 		<View style={styles.loginBackground}>

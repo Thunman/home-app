@@ -1,12 +1,58 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "../styles/stylesheet";
+import { AuthContext } from "../hooks/authContext";
+import { useContext, useEffect, useState } from "react";
+import {
+	getStatusOffBackend,
+	hibernatePC,
+	startMongo,
+	stopMongo,
+	wakePC,
+} from "../backendInteractions/backendControls";
 
 export const Home = () => {
-	const handleMongoPress = async () => {};
-	const handlePCPress = async () => {};
+	const [mongoStatus, setMongoStatus] = useState(false);
+	const [mainPCStatus, setMainPCStatus] = useState(false);
+	const { backendServiceProvider, setIsLoggedIn } = useContext(AuthContext);
+
+	const handleMongoPress = async () => {
+		let response;
+		if (mongoStatus) {
+			response = await backendServiceProvider(stopMongo);
+			if (response.success) setMongoStatus(true);
+			else alert(response.message);
+		} else {
+			response = await backendServiceProvider(startMongo);
+			if (response.success) setMongoStatus(true);
+			else alert(response.message);
+		}
+		if (!response.success) alert(response.message);
+	};
+	const handlePCPress = async () => {
+		let response;
+		if (mongoStatus) {
+			response = await backendServiceProvider(hibernatePC);
+			if (response.success) setMainPCStatus(true);
+			else alert(response.message);
+		} else {
+			response = await backendServiceProvider(wakePC);
+			if (response.success) setMainPCStatus(true);
+			else alert(response.message);
+		}
+		if (!response.success) alert(response.message);
+	};
 	const handleLogsPress = async () => {};
 	const handleLogoutPress = async () => {};
-
+	useEffect(() => {
+		const getStatus = async () => {
+			const response = await backendServiceProvider(getStatusOffBackend);
+			if (response.success) {
+				setMainPCStatus(response.data.pc);
+				setMongoStatus(response.data.mongo);
+			} else alert(response.message);
+		};
+		getStatus();
+	}, [mongoStatus, mainPCStatus]);
 	return (
 		<View style={styles.homeBackground}>
 			<View style={styles.buttonContainer}>
@@ -14,13 +60,21 @@ export const Home = () => {
 					style={styles.controlButton}
 					onPress={handleMongoPress}
 				>
-					<Text style={styles.styledText}>MongoDB</Text>
+					{mongoStatus ? (
+						<Text style={styles.styledText}>Mongo running</Text>
+					) : (
+						<Text style={styles.styledText}>Mongo stopped</Text>
+					)}
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.controlButton}
 					onPress={handlePCPress}
 				>
-					<Text style={styles.styledText}>MainPC</Text>
+					{mainPCStatus ? (
+						<Text style={styles.styledText}>PC running</Text>
+					) : (
+						<Text style={styles.styledText}>PC hibernating</Text>
+					)}
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.controlButton}

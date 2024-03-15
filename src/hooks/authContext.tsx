@@ -15,7 +15,7 @@ export const AuthContext = createContext<IAuthContext>({
 		return { success: false, message: "", data: {} };
 	},
 	loginServiceProvider: async (_: ILoginFunction, __: string, ___: string) => {
-		return {};
+		return { success: false, message: "", data: {} };
 	},
 });
 
@@ -26,13 +26,15 @@ export const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
 		func: ILoginFunction,
 		username: string,
 		password: string
-	): Promise<AxiosResponse> => {
+	): Promise<IResponse> => {
 		const response = await func(username, password);
-		if (response.status === 200) {
+		if (response.ok) {
 			setIsLoggedIn(true);
 		}
-		return response;
+		const responseData = await response.json();
+		return responseData;
 	};
+
 	const backendServiceProvider = async (
 		func: IBackendInteraction
 	): Promise<IResponse> => {
@@ -40,6 +42,7 @@ export const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
 		if (response.status === 401) {
 			setIsLoggedIn(false);
 		}
+		console.log("res: ", response.status);
 		const responseData = await response.json();
 		return responseData;
 	};

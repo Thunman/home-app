@@ -1,14 +1,15 @@
-import axios from "axios";
-
 export const login = async (username: string, password: string) => {
-	console.log("name ", username);
-	console.log("pass ", password);
-	const response = await axios.post(
-		"https://thunman.servebeer.com/api/users/login",
-		{
-			username: username,
-			password: password,
-		}
-	);
-	return response;
+	return fetch("https://thunman.servebeer.com/api/users/login", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ username, password }),
+	});
+};
+
+export const logout = async () => {
+	return fetch("https://thunman.servebeer.com/api/users/logout", {
+		method: "POST",
+		credentials: "include",
+		headers: { "Content-Type": "application/json" },
+	});
 };

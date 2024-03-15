@@ -1,5 +1,4 @@
 import React from "react";
-import { AxiosResponse } from "axios";
 
 export interface RootStackParamList {
 	Login: undefined;
@@ -27,10 +26,10 @@ export interface IAuthContext {
 		func: ILoginFunction,
 		username: string,
 		password: string
-	) => Promise<any>;
+	) => Promise<IResponse>;
 }
 export interface ILoginFunction {
-	(username: string, password: string): Promise<AxiosResponse>;
+	(username: string, password: string): Promise<Response>;
 }
 export interface IBackendInteraction {
 	(): Promise<Response>;

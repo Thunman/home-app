@@ -3,6 +3,7 @@ import React from "react";
 export interface RootStackParamList {
 	Login: undefined;
 	Home: undefined;
+	Logs: undefined;
 	[key: string]: undefined | object;
 }
 

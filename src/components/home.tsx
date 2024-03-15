@@ -9,12 +9,17 @@ import {
 	stopMongo,
 	wakePC,
 } from "../backendInteractions/backendControls";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../helpers/interfaces";
+
+type NavigationProp = StackNavigationProp<RootStackParamList, "Logs">;
 
 export const Home = () => {
 	const [mongoStatus, setMongoStatus] = useState(false);
 	const [mainPCStatus, setMainPCStatus] = useState(false);
 	const { backendServiceProvider, setIsLoggedIn } = useContext(AuthContext);
-
+	const navigator = useNavigation<NavigationProp>();
 	const handleMongoPress = async () => {
 		let response;
 		if (mongoStatus) {
@@ -41,7 +46,9 @@ export const Home = () => {
 		}
 		if (!response.success) alert(response.message);
 	};
-	const handleLogsPress = async () => {};
+	const handleLogsPress = async () => {
+		navigator.navigate("Logs");
+	};
 	const handleLogoutPress = async () => {};
 	useEffect(() => {
 		const getStatus = async () => {

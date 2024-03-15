@@ -65,4 +65,12 @@ export const styles = StyleSheet.create({
 		borderRadius: 8,
 		elevation: 50,
 	},
+	container: {
+		backgroundColor: "black",
+		padding: 10,
+	},
+	logText: {
+		fontFamily: "monospace",
+		color: "#4CAF50",
+	},
 });

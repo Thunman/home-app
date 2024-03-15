@@ -8,15 +8,19 @@ import Home from "./src/components/home";
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
-  const Stack = createStackNavigator();
-  return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthProvider>
-  );
+	const Stack = createStackNavigator();
+	return (
+		<AuthProvider>
+			<NavigationContainer>
+				<Stack.Navigator>
+					<Stack.Screen name="Login" component={Login} />
+					<Stack.Screen
+						name="Home"
+						component={Home}
+						options={{ headerShown: false }}
+					/>
+				</Stack.Navigator>
+			</NavigationContainer>
+		</AuthProvider>
+	);
 }

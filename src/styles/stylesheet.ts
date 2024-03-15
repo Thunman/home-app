@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-	background: {
+	loginBackground: {
 		backgroundColor: "#343434",
 		flex: 1,
 		alignItems: "center",
@@ -39,5 +39,30 @@ export const styles = StyleSheet.create({
 	},
 	text: {
 		color: "white",
+	},
+	homeBackground: {
+		backgroundColor: "#343434",
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	buttonContainer: {
+		height: "75%",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "space-around",
+		width: "100%",
+	},
+	controlButton: {
+		backgroundColor: "#656565",
+		width: "45%",
+		height: "20%",
+		alignItems: "center",
+		justifyContent: "center",
+		marginTop: 25,
+		borderColor: "white",
+		borderWidth: 3,
+		borderRadius: 8,
+		elevation: 50,
 	},
 });

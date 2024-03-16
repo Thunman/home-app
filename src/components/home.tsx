@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../helpers/interfaces";
+import { logout } from "../backendInteractions/auth";
 
 type NavigationProp = StackNavigationProp<RootStackParamList, "Logs">;
 
@@ -49,7 +50,11 @@ export const Home = () => {
 	const handleLogsPress = async () => {
 		navigator.navigate("Logs");
 	};
-	const handleLogoutPress = async () => {};
+	const handleLogoutPress = async () => {
+		const response = await backendServiceProvider(logout);
+		if (response.success) setIsLoggedIn(false);
+		else alert(response.message);
+	};
 	useEffect(() => {
 		const getStatus = async () => {
 			const response = await backendServiceProvider(getStatusOffBackend);
